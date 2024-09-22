@@ -11,19 +11,28 @@ export class OrderService {
     @InjectRepository(Order) private userRepository: Repository<Order>,
   ) {}
   create(createOrderDto: CreateOrderDto) {
-    return 'This action adds a new order';
+    const order = new Order();
+    order.productId = createOrderDto.productId;
+    order.email = createOrderDto.email;
+    order.status = 'draft';
+    return this.userRepository.save(order);
   }
 
   findAll() {
-    return `This action returns all order`;
+    return this.userRepository.find();
   }
 
   findOne(id: number) {
-    return `This action returns a #${id} order`;
+    return this.userRepository.findOneBy({ id: id });
   }
 
-  update(id: number, updateOrderDto: UpdateOrderDto) {
-    return `This action updates a #${id} order`;
+  async update(id: number, updateOrderDto: UpdateOrderDto) {
+    // update order
+    const order = await this.userRepository.findOneBy({ id: id });
+    order.productId = updateOrderDto.productId;
+    order.email = updateOrderDto.email;
+    order.status = updateOrderDto.status;
+    return this.userRepository.save(order);
   }
 
   remove(id: number) {
