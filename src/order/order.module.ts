@@ -10,7 +10,7 @@ import { ClientsModule, Transport } from '@nestjs/microservices';
     TypeOrmModule.forFeature([Order]),
     ClientsModule.register([
       {
-        name: 'inventory_SERVICE',
+        name: 'INVENTORY_SERVICE',
         transport: Transport.RMQ,
         options: {
           urls: ['amqp://localhost:5672'],
